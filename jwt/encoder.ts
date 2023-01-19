@@ -14,11 +14,11 @@ export class JWTEncoder {
     return Buffer.from(payloadJSON).toString("base64");
   }
 
-  protected getUnsignedToken(header = DefaultHeader, payload): string {
+  getUnsignedToken(header = DefaultHeader, payload): string {
     return this.encodeHeader(header) + "." + this.encodePayload(payload);
   }
 
-  protected getSignature(
+  getSignature(
     header: Header = DefaultHeader,
     payload: Payload,
     secretKey: string

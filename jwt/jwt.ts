@@ -1,11 +1,12 @@
 import { Buffer } from "buffer";
 import { Payload, DefaultHeader, Header } from "./types";
-import { getUnsignedToken, getSignature } from "./encoding";
+import { JWTEncoder } from "./encoder";
 
 export class JWT {
   private expirationDate: number;
 
   constructor(
+    private readonly encoder: JWTEncoder,
     private readonly payload: Payload,
     private readonly secretKey: string,
     private readonly header: Header = DefaultHeader
@@ -20,8 +21,15 @@ export class JWT {
   }
 
   getJWT(): string {
-    const unsignedToken = getUnsignedToken(this.header, this.payload);
-    const signature = getSignature(this.header, this.payload, this.secretKey);
+    const unsignedToken = this.encoder.getUnsignedToken(
+      this.header,
+      this.payload
+    );
+    const signature = this.encoder.getSignature(
+      this.header,
+      this.payload,
+      this.secretKey
+    );
     const extraSeconds = this.payload["exp"] ? this.payload["exp"] : 0;
     this.expirationDate = Math.floor(Date.now() / 1000) + extraSeconds;
 

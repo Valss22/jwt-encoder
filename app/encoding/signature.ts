@@ -1,14 +1,14 @@
-import { encodeHeader, HEADER_DEFAULT, IHeader } from "./header";
+import { encodeHeader, headerDefault, Header } from "./header";
 import { encodePayload, Payload } from "./payload";
 
 const crypto = require("crypto");
 
-export const getUnsignedToken = (header = HEADER_DEFAULT, payload): string => {
+export const getUnsignedToken = (header = headerDefault, payload): string => {
   return encodeHeader(header) + "." + encodePayload(payload);
 };
 
 export const getSignature = (
-  header: IHeader = HEADER_DEFAULT,
+  header: Header = headerDefault,
   payload: Payload,
   secretKey: string
 ) => {

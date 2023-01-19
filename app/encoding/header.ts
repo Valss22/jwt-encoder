@@ -1,18 +1,18 @@
 import { Buffer } from "buffer";
 
-export const HEADER_DEFAULT: IHeader = {
+export const headerDefault: Header = {
   alg: "HS256",
   typ: "JWT",
 };
 
 type Algorithms = "HS256";
 
-export interface IHeader {
+export interface Header {
   alg: Algorithms;
   typ: "JWT";
 }
 
-export const encodeHeader = (header: IHeader = HEADER_DEFAULT): string => {
+export const encodeHeader = (header: Header = headerDefault): string => {
   const headerJSON = JSON.stringify(header);
   return Buffer.from(headerJSON).toString("base64");
 };

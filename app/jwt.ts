@@ -1,4 +1,4 @@
-import { HEADER_DEFAULT, IHeader } from "./encoding/header";
+import { headerDefault, Header } from "./encoding/header";
 import { Payload } from "./encoding/payload";
 import { getSignature, getUnsignedToken } from "./encoding/signature";
 import { Buffer } from "buffer";
@@ -10,7 +10,7 @@ class JWT {
   constructor(
     private readonly payload: Payload,
     private readonly secretKey: string,
-    private readonly header: IHeader = HEADER_DEFAULT
+    private readonly header: Header = headerDefault
   ) {}
 
   getJWT(): string {

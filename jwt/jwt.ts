@@ -2,7 +2,7 @@ import { Buffer } from "buffer";
 import { Payload, DefaultHeader, Header } from "./types";
 import { getUnsignedToken, getSignature } from "./encoding";
 
-class JWT {
+export class JWT {
   private expirationDate: number;
 
   constructor(
@@ -28,15 +28,14 @@ class JWT {
     return unsignedToken + "." + signature;
   }
 
-  getPayloadFromJWT(jwt: string): Payload {
+  getPayload(jwt: string): Payload | never {
     if (this.verifyJWT(this.payload["exp"], this.expirationDate)) {
       const encodedPayload = jwt.split(".")[1];
       const strPayload = Buffer.from(encodedPayload, "base64").toString(
         "ascii"
       );
       return JSON.parse(strPayload);
-    } else {
-      console.error("jwt expired");
     }
+    throw new Error("jwt validation error!");
   }
 }

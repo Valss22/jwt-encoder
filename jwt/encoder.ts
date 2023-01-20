@@ -1,10 +1,15 @@
 import { Buffer } from "buffer";
-import { Payload, Header, DefaultHeader } from "./types";
+import { Payload, Header } from "./types";
 
 const crypto = require("crypto");
 
+export const defaultHeader: Header = {
+  alg: "HS256",
+  typ: "JWT",
+};
+
 export class JWTEncoder {
-  encodeHeader(header: Header = DefaultHeader): string {
+  encodeHeader(header: Header = defaultHeader): string {
     const headerJSON = JSON.stringify(header);
     return Buffer.from(headerJSON).toString("base64");
   }
@@ -14,12 +19,12 @@ export class JWTEncoder {
     return Buffer.from(payloadJSON).toString("base64");
   }
 
-  getUnsignedToken(header = DefaultHeader, payload): string {
+  getUnsignedToken(header = defaultHeader, payload): string {
     return this.encodeHeader(header) + "." + this.encodePayload(payload);
   }
 
   getSignature(
-    header: Header = DefaultHeader,
+    header: Header = defaultHeader,
     payload: Payload,
     secretKey: string
   ) {

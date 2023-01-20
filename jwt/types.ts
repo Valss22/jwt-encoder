@@ -9,8 +9,3 @@ export interface Header {
   alg: Algorithms;
   typ: "JWT";
 }
-
-export const DefaultHeader: Header = {
-  alg: "HS256",
-  typ: "JWT",
-};

@@ -1,6 +1,6 @@
 import { Buffer } from "buffer";
-import { Payload, DefaultHeader, Header } from "./types";
-import { JWTEncoder } from "./encoder";
+import { Payload, Header } from "./types";
+import { JWTEncoder, defaultHeader } from "./encoder";
 
 export class JWT {
   private expirationDate: number;
@@ -9,7 +9,7 @@ export class JWT {
     private readonly encoder: JWTEncoder,
     private readonly payload: Payload,
     private readonly secretKey: string,
-    private readonly header: Header = DefaultHeader
+    private readonly header: Header = defaultHeader
   ) {}
 
   verifyJWT(jwtLifetime: number | undefined, expirationDate: number): boolean {
